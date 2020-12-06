@@ -3,6 +3,7 @@ package scanner
 import (
 	"context"
 	"fmt"
+	dockle_types "github.com/Portshift/dockle/pkg/types"
 	"github.com/Portshift/klar/clair"
 	"github.com/Portshift/klar/forwarding"
 	"github.com/Portshift/kubei/pkg/config"
@@ -12,11 +13,9 @@ import (
 	slice_utils "github.com/Portshift/kubei/pkg/utils/slice"
 	uuid "github.com/satori/go.uuid"
 	log "github.com/sirupsen/logrus"
-	dockle_types "github.com/Portshift/dockle/pkg/types"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"strings"
 	"sync"
 	"sync/atomic"
 )
@@ -99,20 +98,42 @@ type scanData struct {
 	scanErrMsg            string
 }
 
-func (sd *scanData) getErrMsg() string {
-	var errors []string
+type ErrType string
+
+const (
+	ErrTypeDockle ErrType = "ErrTypeDockle"
+	ErrTypeVul    ErrType = "ErrTypeVulnerability"
+	ErrTypeJob    ErrType = "ErrTypeJob"
+)
+
+type ScanErrMsg struct {
+	msg        string
+	errMsgType ErrType
+}
+
+func (sd *scanData) getScanErrors() []*ScanErrMsg {
+	var errors []*ScanErrMsg
 
 	if len(sd.scanErrMsg) != 0 {
-		errors = append(errors, sd.scanErrMsg)
+		errors = append(errors, &ScanErrMsg{
+			msg:        sd.scanErrMsg,
+			errMsgType: ErrTypeJob,
+		})
 	}
 	if len(sd.vulnerabilitiesResult.scanErrMsg) != 0 {
-		errors = append(errors, sd.vulnerabilitiesResult.scanErrMsg)
+		errors = append(errors, &ScanErrMsg{
+			msg:        sd.vulnerabilitiesResult.scanErrMsg,
+			errMsgType: ErrTypeVul,
+		})
 	}
 	if len(sd.dockerfileResult.scanErrMsg) != 0 {
-		errors = append(errors, sd.dockerfileResult.scanErrMsg)
+		errors = append(errors, &ScanErrMsg{
+			msg:        sd.dockerfileResult.scanErrMsg,
+			errMsgType: ErrTypeDockle,
+		})
 	}
 
-	return strings.Join(errors, ", ")
+	return errors
 }
 
 func (sd *scanData) setVulnerabilitiesResult(result *vulnerabilitiesScanResult) {
@@ -283,7 +304,7 @@ func (s *Scanner) Results() *types.ScanResults {
 				Vulnerabilities:       scanD.vulnerabilitiesResult.result,
 				DockerfileScanResults: scanD.dockerfileResult.result,
 				Success:               scanD.success,
-				ScanErrMsg:            scanD.getErrMsg(),
+				ScanErrors:            scanD.getScanErrors(),
 			})
 		}
 	}

@@ -3,6 +3,7 @@ package types
 import (
 	"github.com/Portshift/klar/clair"
 	dockle_types "github.com/Portshift/dockle/pkg/types"
+	"github.com/Portshift/kubei/pkg/scanner"
 )
 
 type ScanProgress struct {
@@ -21,7 +22,7 @@ type ImageScanResult struct {
 	Vulnerabilities       []*clair.Vulnerability
 	DockerfileScanResults dockle_types.AssessmentMap
 	Success               bool
-	ScanErrMsg            string
+	ScanErrors            []*scanner.ScanErrMsg
 }
 
 type ScanResults struct {
