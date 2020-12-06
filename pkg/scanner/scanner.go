@@ -98,38 +98,25 @@ type scanData struct {
 	scanErrMsg            string
 }
 
-type ErrType string
-
-const (
-	ErrTypeDockle ErrType = "ErrTypeDockle"
-	ErrTypeVul    ErrType = "ErrTypeVulnerability"
-	ErrTypeJob    ErrType = "ErrTypeJob"
-)
-
-type ScanErrMsg struct {
-	msg        string
-	errMsgType ErrType
-}
-
-func (sd *scanData) getScanErrors() []*ScanErrMsg {
-	var errors []*ScanErrMsg
+func (sd *scanData) getScanErrors() []*types.ScanErrMsg {
+	var errors []*types.ScanErrMsg
 
 	if len(sd.scanErrMsg) != 0 {
-		errors = append(errors, &ScanErrMsg{
-			msg:        sd.scanErrMsg,
-			errMsgType: ErrTypeJob,
+		errors = append(errors, &types.ScanErrMsg{
+			Msg:        sd.scanErrMsg,
+			ErrMsgType: types.ScanErrTypeJob,
 		})
 	}
 	if len(sd.vulnerabilitiesResult.scanErrMsg) != 0 {
-		errors = append(errors, &ScanErrMsg{
-			msg:        sd.vulnerabilitiesResult.scanErrMsg,
-			errMsgType: ErrTypeVul,
+		errors = append(errors, &types.ScanErrMsg{
+			Msg:        sd.vulnerabilitiesResult.scanErrMsg,
+			ErrMsgType: types.ScanErrTypeVul,
 		})
 	}
 	if len(sd.dockerfileResult.scanErrMsg) != 0 {
-		errors = append(errors, &ScanErrMsg{
-			msg:        sd.dockerfileResult.scanErrMsg,
-			errMsgType: ErrTypeDockle,
+		errors = append(errors, &types.ScanErrMsg{
+			Msg:        sd.dockerfileResult.scanErrMsg,
+			ErrMsgType: types.ScanErrTypeDockle,
 		})
 	}
 
