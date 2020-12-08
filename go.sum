@@ -37,6 +37,8 @@ github.com/Erezf-p/dockle v0.3.2-0.20201208102248-0fd60440d251 h1:qf1wNZ9SNjh+W4
 github.com/Erezf-p/dockle v0.3.2-0.20201208102248-0fd60440d251/go.mod h1:5wZk3T5uw7bqyyIynaMot4PUqWyqIgyY8IIgnnUmSTM=
 github.com/Erezf-p/klar v1.9.10-0.20201207173350-b61761f538bd h1:uQzWrTGOvcMQyeyLtYOs5jC4ZN+v4fpKqVxPf/Wq1/A=
 github.com/Erezf-p/klar v1.9.10-0.20201207173350-b61761f538bd/go.mod h1:BVPXethETeq6dYE/WjN8BRAu72fdABZyb4MbkjMbry0=
+github.com/Erezf-p/klar v1.9.10-0.20201208102833-0667f4659189 h1:Y36q+izXqkQ7jl9aOcaDCLQ01Djj6nX1Xh1nUf0jGBM=
+github.com/Erezf-p/klar v1.9.10-0.20201208102833-0667f4659189/go.mod h1:BVPXethETeq6dYE/WjN8BRAu72fdABZyb4MbkjMbry0=
 github.com/GoogleCloudPlatform/docker-credential-gcr v1.5.0 h1:wykTgKwhVr2t2qs+xI020s6W5dt614QqCHV+7W9dg64=
 github.com/GoogleCloudPlatform/docker-credential-gcr v1.5.0/go.mod h1:BB1eHdMLYEFuFdBlRMb0N7YGVdM5s6Pt0njxgvfbGGs=
 github.com/GoogleCloudPlatform/k8s-cloud-provider v0.0.0-20190822182118-27a4ced34534/go.mod h1:iroGtC8B3tQiqtds1l+mgk/BBOrxbqjH+eUfFQYRc14=
