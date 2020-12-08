@@ -31,6 +31,12 @@ github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/DataDog/zstd v1.4.0/go.mod h1:1jcaCB/ufaK+sKp1NBhlGmpz41jOoPQ35bpF36t7BBo=
+github.com/Erezf-p/dockle v0.3.2-0.20201118172756-4889c8016f40 h1:C/PGpM2t1wHVA84QZ6d6bo9mvKsvvP4r/On2EK4f1T4=
+github.com/Erezf-p/dockle v0.3.2-0.20201118172756-4889c8016f40/go.mod h1:5wZk3T5uw7bqyyIynaMot4PUqWyqIgyY8IIgnnUmSTM=
+github.com/Erezf-p/dockle v0.3.2-0.20201208102248-0fd60440d251 h1:qf1wNZ9SNjh+W4LLzZm4wcB5bWoThn94JgEXB2sHq2A=
+github.com/Erezf-p/dockle v0.3.2-0.20201208102248-0fd60440d251/go.mod h1:5wZk3T5uw7bqyyIynaMot4PUqWyqIgyY8IIgnnUmSTM=
+github.com/Erezf-p/klar v1.9.10-0.20201207173350-b61761f538bd h1:uQzWrTGOvcMQyeyLtYOs5jC4ZN+v4fpKqVxPf/Wq1/A=
+github.com/Erezf-p/klar v1.9.10-0.20201207173350-b61761f538bd/go.mod h1:BVPXethETeq6dYE/WjN8BRAu72fdABZyb4MbkjMbry0=
 github.com/GoogleCloudPlatform/docker-credential-gcr v1.5.0 h1:wykTgKwhVr2t2qs+xI020s6W5dt614QqCHV+7W9dg64=
 github.com/GoogleCloudPlatform/docker-credential-gcr v1.5.0/go.mod h1:BB1eHdMLYEFuFdBlRMb0N7YGVdM5s6Pt0njxgvfbGGs=
 github.com/GoogleCloudPlatform/k8s-cloud-provider v0.0.0-20190822182118-27a4ced34534/go.mod h1:iroGtC8B3tQiqtds1l+mgk/BBOrxbqjH+eUfFQYRc14=

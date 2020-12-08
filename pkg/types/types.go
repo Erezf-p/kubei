@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	dockle_types "github.com/Portshift/dockle/pkg/types"
 	"github.com/Portshift/klar/clair"
 )
@@ -29,15 +30,19 @@ type ScanResults struct {
 	Progress         ScanProgress
 }
 
-type ScanErrType string
+type ScanErrorSource string
 
 const (
-	ScanErrTypeDockle ScanErrType = "ScanErrTypeDockle"
-	ScanErrTypeVul    ScanErrType = "ScanErrTypeVulnerability"
-	ScanErrTypeJob    ScanErrType = "ScanErrTypeJob"
+	ScanErrSourceDockle ScanErrorSource = "ScanErrSourceDockle"
+	ScanErrSourceVul    ScanErrorSource = "ScanErrSourceVulnerability"
+	ScanErrSourceJob    ScanErrorSource = "ScanErrSourceJob"
 )
 
 type ScanErrMsg struct {
-	Msg        string
-	ErrMsgType ScanErrType
+	Error         error
+	ScanErrSource ScanErrorSource
 }
+
+var ErrorUnauthorized = errors.New("unauthorized")
+var ErrorJobRun = errors.New("failed to run job")
+var ErrorScanTimeout = errors.New("job timed out")

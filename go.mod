@@ -16,6 +16,10 @@ require (
 	k8s.io/kubernetes v1.18.1
 )
 
+replace github.com/Portshift/klar v1.9.10-0.20201118172109-371310ea259d => github.com/Erezf-p/klar v1.9.10-0.20201207173350-b61761f538bd
+
+replace github.com/Portshift/dockle v0.3.2-0.20201118172756-4889c8016f40 => github.com/Erezf-p/dockle v0.3.2-0.20201208102248-0fd60440d251
+
 // kubernetes v1.18.1
 replace (
 	k8s.io/api => k8s.io/api v0.18.1

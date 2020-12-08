@@ -71,17 +71,17 @@ type imagePodContext struct {
 }
 
 type vulnerabilitiesScanResult struct {
-	result     []*clair.Vulnerability
-	success    bool
-	completed  bool
-	scanErrMsg string
+	result    []*clair.Vulnerability
+	success   bool
+	completed bool
+	scanErr   error
 }
 
 type dockerfileScanResult struct {
-	result     dockle_types.AssessmentMap
-	success    bool
-	completed  bool
-	scanErrMsg string
+	result    dockle_types.AssessmentMap
+	success   bool
+	completed bool
+	scanErr   error
 }
 
 type scanData struct {
@@ -95,28 +95,28 @@ type scanData struct {
 	success               bool
 	completed             bool
 	timeout               bool
-	scanErrMsg            string
+	scanErr               error
 }
 
 func (sd *scanData) getScanErrors() []*types.ScanErrMsg {
 	var errors []*types.ScanErrMsg
 
-	if len(sd.scanErrMsg) != 0 {
+	if sd.scanErr != nil {
 		errors = append(errors, &types.ScanErrMsg{
-			Msg:        sd.scanErrMsg,
-			ErrMsgType: types.ScanErrTypeJob,
+			Error:         sd.scanErr,
+			ScanErrSource: types.ScanErrSourceJob,
 		})
 	}
-	if len(sd.vulnerabilitiesResult.scanErrMsg) != 0 {
+	if sd.vulnerabilitiesResult.scanErr != nil {
 		errors = append(errors, &types.ScanErrMsg{
-			Msg:        sd.vulnerabilitiesResult.scanErrMsg,
-			ErrMsgType: types.ScanErrTypeVul,
+			Error:        sd.vulnerabilitiesResult.scanErr,
+			ScanErrSource: types.ScanErrSourceVul,
 		})
 	}
-	if len(sd.dockerfileResult.scanErrMsg) != 0 {
+	if sd.dockerfileResult.scanErr != nil {
 		errors = append(errors, &types.ScanErrMsg{
-			Msg:        sd.dockerfileResult.scanErrMsg,
-			ErrMsgType: types.ScanErrTypeDockle,
+			Error:        sd.dockerfileResult.scanErr,
+			ScanErrSource: types.ScanErrSourceDockle,
 		})
 	}
 
@@ -337,10 +337,10 @@ func (s *Scanner) HandleVulnerabilitiesResult(result *forwarding.ImageVulnerabil
 	}
 
 	vulnerabilitiesResult := &vulnerabilitiesScanResult{
-		result:     result.Vulnerabilities,
-		success:    result.Success,
-		completed:  true,
-		scanErrMsg: result.ScanErrMsg,
+		result:    result.Vulnerabilities,
+		success:   result.Success,
+		completed: true,
+		scanErr:   result.ScanErr,
 	}
 
 	scanD.setVulnerabilitiesResult(vulnerabilitiesResult)
@@ -350,7 +350,7 @@ func (s *Scanner) HandleVulnerabilitiesResult(result *forwarding.ImageVulnerabil
 		log.WithFields(s.logFields).Infof("No vulnerabilities found on image %v.", result.Image)
 	}
 	if !scanD.vulnerabilitiesResult.success {
-		log.WithFields(s.logFields).Warnf("Vulnerabilities scan of image %v has failed: %v", result.Image, scanD.vulnerabilitiesResult.scanErrMsg)
+		log.WithFields(s.logFields).Warnf("Vulnerabilities scan of image %v has failed: %v", result.Image, scanD.vulnerabilitiesResult.scanErr)
 	}
 
 	if !scanD.completed {
@@ -378,10 +378,10 @@ func (s *Scanner) HandleDockerfileResult(result *dockle_types.ImageAssessment) e
 	}
 
 	dockerfileResult := &dockerfileScanResult{
-		result:     result.Assessment,
-		success:    result.Success,
-		completed:  true,
-		scanErrMsg: result.ScanErrMsg,
+		result:    result.Assessment,
+		success:   result.Success,
+		completed: true,
+		scanErr:   result.ScanErr,
 	}
 
 	scanD.setDockerfileResult(dockerfileResult)
@@ -391,7 +391,7 @@ func (s *Scanner) HandleDockerfileResult(result *dockle_types.ImageAssessment) e
 		log.WithFields(s.logFields).Infof("No checkpoints found on image %v.", result.Image)
 	}
 	if !scanD.dockerfileResult.success {
-		log.WithFields(s.logFields).Warnf("Dockerfile scan of image %v has failed: %v", result.Image, scanD.dockerfileResult.scanErrMsg)
+		log.WithFields(s.logFields).Warnf("Dockerfile scan of image %v has failed: %v", result.Image, scanD.dockerfileResult.scanErr)
 	}
 
 	if !scanD.completed {
